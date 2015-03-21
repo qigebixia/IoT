@@ -23,3 +23,10 @@
 view函数第三个可选参数可以改变函数的行为，让数据作为字符串返回而不是发送到浏览器。如果想用其它方式对数据进一步处理，这样做很有用。如果将view第三个参数设置为true（布尔）则函数返回数据。view函数缺省行为是false,　将数据发送到浏览器。如果想返回数据，记得将它赋到一个变量中。
 
   ` $string = $this->load->view('myfile', '', true);
+
+
+#[在CodeIgniter框架中使用RESTful服务](http://tech.hexun.com/2011-04-21/128917096.html)
+
+用Slim可以简单搭建起一个RESTful服务框架。但是因为首先搭建的是CI，所以尝试在CI中扩展RESTServer。
+
+https://github.com/chriskacerguis/codeigniter-restserver
