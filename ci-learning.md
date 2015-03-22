@@ -31,4 +31,14 @@ view函数第三个可选参数可以改变函数的行为，让数据作为字�
 
 https://github.com/chriskacerguis/codeigniter-restserver
 
- 使用Slim框架可以 极简地建立RESTful模型。
+###最终还是先尝试了使用Slim框架可以 极简地建立RESTful模型。
+
+[PHP再学习4—— slim框架学习和使用](http://blog.csdn.net/xukai871105/article/details/18677215)
+
+搭建了Slim框架之后，一直在浏览器键入http://localhost/post发现一直是404.而
+
+curl --request POST http://localhost/post
+
+却是一切正常。看来对其原理没有了解透彻，想当然以为访问其网址就能构成post指令。
+
+在location下，加入try_files $uri $uri/ /index.php;。可以解决nginx404问题
