@@ -30,3 +30,5 @@ view函数第三个可选参数可以改变函数的行为，让数据作为字�
 用Slim可以简单搭建起一个RESTful服务框架。但是因为首先搭建的是CI，所以尝试在CI中扩展RESTServer。
 
 https://github.com/chriskacerguis/codeigniter-restserver
+
+ 使用Slim框架可以 极简地建立RESTful模型。
