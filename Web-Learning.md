@@ -21,3 +21,6 @@ http://blog.csdn.net/aidenliu/article/details/6586775
 
 http://blog.csdn.net/hybaym/article/details/8960345
 
+在linux下用了这么久putty，却没想到内置ssh指令就可以解决问题。。
+
+http://blog.chinaunix.net/uid-9881170-id-133499.html
