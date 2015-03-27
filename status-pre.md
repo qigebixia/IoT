@@ -11,13 +11,16 @@ Switch:
   4. Tap_water:{name:"tap_water", value:0/1}
   5. Projector:{name:"projector", value:0/1}
   6. Camara:{name:"camara", value:0/1}
+
 Step:
   6. LED2:{name:"led2", switch_value:0/1, controller:"up"/"down"/"stay"}
   7. LED3:{name:"led3", switch_value:0/1, controller:"red"/"green"/"blue"}
   8. Sound:{name:"sound", switch_value:0/1, controller:"up"/"down"/"stay"}
+
 Generic:
   9. Access Control:{name:"access", timestamp:?, data:?}
   10. Gas:{name:"gas",  timestamp:?, data:?}
   11. TV:{name:"tv", switch_value, sound_value, channel_value}
   12. Air Conditioner:{name:"conditioner", switch_value, channel_value}
+
 http://icoolpy.com/
