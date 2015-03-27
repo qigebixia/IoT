@@ -4,6 +4,9 @@
 
 
 ###数据量：
-  1. Led1:{device_id:String, timestamp:Number, value:json/number}
+  1. Led1:{device_id:"led1", value:0/1}
+  2. Curtain:{device_id:"curtain", value:0/1}
+  3. Screen:{device_id:"screen", value:0/1}
+  4. 
 
 http://icoolpy.com/
