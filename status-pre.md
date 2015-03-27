@@ -4,6 +4,6 @@
 
 
 ###数据量：
-  1. Light:{device_id:String, timestamp:Number, value:json/number}
+  1. Led1:{device_id:String, timestamp:Number, value:json/number}
 
 http://icoolpy.com/
