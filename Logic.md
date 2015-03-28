@@ -11,8 +11,8 @@ mainApp.js:
 
   var router = express.Router();
   
-  router.route('/user')
+	router.route('/user')
   
-    //Content-Type 必须为application/json
+	//Content-Type 必须为application/json
     
 	.post(takeup, isAdmin, function (req, res)
