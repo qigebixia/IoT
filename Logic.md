@@ -16,3 +16,13 @@ mainApp.js:
 	//Content-Type 必须为application/json
     
 	.post(takeup, isAdmin, function (req, res)
+	
+	//传感器管理api
+	router.route('/device/:dvid/sensors')
+    //Content-Type 必须为application/json
+	.post(isAuthenticated, isDvsInUkey, 
+	
+	//数据结点管理api
+router.route('/device/:dvid/sensor/:ssid/datapoints')
+    //Content-Type 必须为application/json
+	.post(isAuthenticated, isDvsInUkey, isSssInDvs, getSensorType,
