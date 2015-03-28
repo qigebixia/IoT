@@ -4,4 +4,6 @@ mainApp.js:
   
   UserModel.findOne
   
-  takeup(req, res, next)
+  takeup(req, res, next)  isAdmin  isLogin  isAuthenticated  isDvsInUkey  isSssInDvs
+
+  
