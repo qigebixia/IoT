@@ -23,6 +23,6 @@ mainApp.js:
 	.post(isAuthenticated, isDvsInUkey, 
 	
 	//数据结点管理api
-router.route('/device/:dvid/sensor/:ssid/datapoints')
-    //Content-Type 必须为application/json
+	router.route('/device/:dvid/sensor/:ssid/datapoints')
+    	//Content-Type 必须为application/json
 	.post(isAuthenticated, isDvsInUkey, isSssInDvs, getSensorType,
