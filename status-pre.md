@@ -4,7 +4,7 @@
 
 
 ###数据量：
-Switch:
+Switches:
   1. Led1:{name:"led1", switch:0/1}
   2. Curtain:{name:"curtain", switch:0/1}
   3. Screen:{name:"screen", switch:0/1}
@@ -12,12 +12,12 @@ Switch:
   5. Projector:{name:"projector", switch:0/1}
   6. Camara:{name:"camara", switch:0/1}
 
-Step:
+StepDevices:
   6. LED2:{name:"led2", switch:0/1, controller:"up"/"down"/"stay"}
   7. LED3:{name:"led3", switch:0/1, controller:"red"/"green"/"blue"}
   8. Sound:{name:"sound", switch:0/1, controller:"up"/"down"/"stay"}
 
-Generic:
+GenericDevices:
   9. Access Control:{name:"access", timestamp:?, data:?}
   10. Gas:{name:"gas",  timestamp:?, data:?}
   11. TV:{name:"tv", switch, sound_value, channel_value}
