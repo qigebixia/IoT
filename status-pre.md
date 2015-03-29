@@ -5,7 +5,7 @@
 
 ###数据量：
 Switch:
-  1. Led1:{name:"led1", value:0/1}
+  1. Led1:{name:"led1", switch:0/1}
   2. Curtain:{name:"curtain", value:0/1}
   3. Screen:{name:"screen", value:0/1}
   4. Tap_water:{name:"tap_water", value:0/1}
