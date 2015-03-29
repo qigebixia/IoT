@@ -20,7 +20,7 @@ Step:
 Generic:
   9. Access Control:{name:"access", timestamp:?, data:?}
   10. Gas:{name:"gas",  timestamp:?, data:?}
-  11. TV:{name:"tv", switch_value, sound_value, channel_value}
-  12. Air Conditioner:{name:"conditioner", switch_value, channel_value}
+  11. TV:{name:"tv", switch, sound_value, channel_value}
+  12. Air Conditioner:{name:"conditioner", switch, channel_value}
 
 http://icoolpy.com/
