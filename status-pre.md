@@ -8,9 +8,9 @@ Switch:
   1. Led1:{name:"led1", switch:0/1}
   2. Curtain:{name:"curtain", switch:0/1}
   3. Screen:{name:"screen", switch:0/1}
-  4. Tap_water:{name:"tap_water", value:0/1}
-  5. Projector:{name:"projector", value:0/1}
-  6. Camara:{name:"camara", value:0/1}
+  4. Tap_water:{name:"tap_water", switch:0/1}
+  5. Projector:{name:"projector", switch:0/1}
+  6. Camara:{name:"camara", switch:0/1}
 
 Step:
   6. LED2:{name:"led2", switch_value:0/1, controller:"up"/"down"/"stay"}
