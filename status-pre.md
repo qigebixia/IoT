@@ -13,9 +13,9 @@ Switch:
   6. Camara:{name:"camara", switch:0/1}
 
 Step:
-  6. LED2:{name:"led2", switch_value:0/1, controller:"up"/"down"/"stay"}
-  7. LED3:{name:"led3", switch_value:0/1, controller:"red"/"green"/"blue"}
-  8. Sound:{name:"sound", switch_value:0/1, controller:"up"/"down"/"stay"}
+  6. LED2:{name:"led2", switch:0/1, controller:"up"/"down"/"stay"}
+  7. LED3:{name:"led3", switch:0/1, controller:"red"/"green"/"blue"}
+  8. Sound:{name:"sound", switch:0/1, controller:"up"/"down"/"stay"}
 
 Generic:
   9. Access Control:{name:"access", timestamp:?, data:?}
