@@ -23,4 +23,20 @@ GenericDevices:
   11. TV:{name:"tv", switch, sound_value, channel_value}
   12. Air Conditioner:{name:"conditioner", switch, channel_value}
 
-http://icoolpy.com/
+###API:
+
+#####请求头中尝试设置Content-Type为application/json
+
+  Host : 192.168.1.1
+  Port : 8080
+
+####更新设备信息 PUT：
+  Switches:
+    PUT /index.php/switches/{id}/switch
+    值：{\"switch\" : [0 or 1]}
+    
+####获取设备信息 GET：
+Switches:
+  GET /index.php/switches/{id}/switch
+  值：{\"switch\" : [0 or 1]}
+ 
