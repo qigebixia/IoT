@@ -36,7 +36,11 @@ GenericDevices:
     PUT /index.php/switches/{id}/switch
     
     值：{\"switch\" : [0 or 1]}
-    
+  
+  StepDevices:
+  
+    PUT /index.php/switches/{id}/switch
+    值：{\"switch\" : [0 or 1]}
 ####获取设备信息 GET：
 Switches:
 
