@@ -31,17 +31,25 @@ GenericDevices:
 
 ####更新设备信息 PUT：
   Switches:
+  
     PUT /index.php/switches/{id}/switch
     值：{\"switch\" : [0 or 1]}
   
   StepDevices:
   
-    PUT /index.php/switches/{id}/switch
+    PUT /index.php/stepdevices/{id}/switch
     值：{\"switch\" : [0 or 1]}
+    
+    PUT /index.php/stepdevices/{id}/controller
+    值：{\"controller\" : [0 or + or -]}
+    
+    PUT /index.php/stepdevices/{id}
+    值：{\"switch\" : [0 or 1], \"controller\" : [0 or + or -]}
+    
 ####获取设备信息 GET：
-Switches:
 
     GET /index.php/switches/{id}/switch
-    
     值：{\"switch\" : [0 or 1]}
- 
+    
+    GET /index.php/stepdevices/{id}
+    值：{\"switch\" : [0 or 1], \"controller\" : [0 or + or -]}}
