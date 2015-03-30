@@ -52,4 +52,4 @@ GenericDevices:
     值：{\"switch\" : [0 or 1]}
     
     GET /index.php/stepdevices/{id}
-    值：{\"switch\" : [0 or 1], \"controller\" : [0 or + or -]}}
+    值：{\"switch\" : [0 or 1], \"controller\" : [0 or + or -]}
