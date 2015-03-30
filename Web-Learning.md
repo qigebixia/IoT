@@ -26,3 +26,7 @@ http://blog.csdn.net/hybaym/article/details/8960345
 http://blog.chinaunix.net/uid-9881170-id-133499.html  http://www.oschina.net/question/54100_54142
 
 http://knockoutjs.com/documentation/observables.html
+
+http://www.w3school.com.cn/jquery/jquery_ajax_get_post.asp
+
+http://www.w3school.com.cn/jquery/ajax_ajax.asp
