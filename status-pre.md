@@ -32,11 +32,15 @@ GenericDevices:
 
 ####更新设备信息 PUT：
   Switches:
+  
     PUT /index.php/switches/{id}/switch
+    
     值：{\"switch\" : [0 or 1]}
     
 ####获取设备信息 GET：
 Switches:
+
   GET /index.php/switches/{id}/switch
+  
   值：{\"switch\" : [0 or 1]}
  
