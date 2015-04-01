@@ -53,3 +53,7 @@ GenericDevices:
     
     GET /index.php/stepdevices/{id}
     值：{\"switch\" : [0 or 1], \"controller\" : [0 or + or -]}
+
+####成功改变状态FeedBack：
+    POST /index.php/feedback/{name}
+    值： "{\"code\":0}"
