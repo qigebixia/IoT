@@ -1,0 +1,147 @@
+﻿<div id="centerModel" >
+    <div data-am-widget="list_news" class="am-list-news am-list-news-default">
+        <div class="am-list-news-bd">
+            <ul data-bind="foreach: { data: dvs, as: 'dv' }" class="am-list am-list-static am-list-border">
+                <li class="am-g am-list-item-desced">
+                    <span class="am-icon-power-off"></span>
+                    <span data-bind="text:dv.name + 'Title'"></span>
+                    <div class="switch am-fr">
+                        <input class="cmn-toggle cmn-toggle-round" type="checkbox"
+                               data-bind="attr: {id: 'cb' + '-' + dv.id, value : dv.switch }, checked : dv.switch,
+                                 event:{ change: $root.switchChanged}">
+                        <label data-bind="attr: { 'for': 'cb' + '-' + dv.id }"></label>
+                    </div>
+                    <div class="am-list-item-text" data-bind="text:dv.name+'text'"></div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function centervm() {
+        var self = this;
+        
+        self.displayval = function (ss) {
+            $.AMUI.utils.cookie.set('dvid', ss.dvid);
+            $.AMUI.utils.cookie.set('ssid', ss.id);
+            $("#render").load("web/dis_val_page.html");
+        };
+
+        self.displayval2 = function (ss) {
+            $.AMUI.utils.cookie.set('dvid', ss.dvid);
+            $.AMUI.utils.cookie.set('ssid', ss.id);
+            $("#render").load("web/dis_val_list_page.html");
+        };
+
+        self.disdvs = function(ss){
+            $("#render").load("web/dvs_page.html");
+        }
+
+        self.checkFeedBack = function()
+        {
+           
+        }
+        self.switchChanged = function (item) 
+        {
+            var data = "{\"switch\":" + Number(item.switch()) + "}";
+            $.ajax(
+            {
+                type: "PUT",
+                url: "/index.php/switches/"  + item.id + "/switch",
+                data: data,
+                success: function (data) 
+                {
+                   $.post("/index.php/feedback/"+item.name,
+                        "{\"code\":1}",
+                        function(data)
+                        {
+                            console.log("seed 1 OK");
+                        });
+                   setTimeout(function()
+                    {
+                        $.get("/index.php/feedback/"+item.name,
+                            function(data)
+                            {
+                                if(1 == data)
+                                {
+                                    console.log("didn't get !!");
+                                }else if (2 == data) 
+                                {
+                                    console.log("something wrong with the server !!");
+                                }else if (0 == data) 
+                                {
+                                    console.log("Well done!");
+                                };
+                            });
+                    }, 4000);
+                 //  console.log(data);
+                },
+                error: function (xhr, status, error) 
+                {
+                    $.post("/index.php/feedback/"+item.name,
+                        "{'code':2}",
+                        function()
+                        {
+                            console.log("seed 1 OK");
+                        });
+                    $("#msg").html(xhr.responseText);
+                    $('#my-prompt').modal('open');
+                }
+            });
+        };
+
+        self.dvs = ko.observableArray();
+        self.loaddata = function () 
+        {
+            $.ajax({
+                url: "/index.php/switches"
+            }).done(function (data) 
+            {
+                if (data.length === 0) 
+                {
+                    $("#render").load("web/nav_page.html");
+                } 
+                else 
+                {
+                    if(0 == self.dvs().length)
+                    {
+                       for (var i = 0; i < data.length; i++) 
+                        {
+                            data[i].switch = ko.observable( Boolean(data[i].switch) );
+                            self.dvs.push(data[i]);
+                        };
+                    }
+                    else
+                    {
+                        for (var i = 0; i < data.length; i++) 
+                        {
+                            self.dvs()[i].switch( Boolean(data[i].switch) );
+                        };
+                    }
+                
+                
+             //   console.log(self.dvs()[0].switch(), self.dvs().length);
+                  //  self.dvs = self.dvs.concat(data);
+
+                   // $.AMUI.utils.cookie.set('data2', JSON.stringify(self.dvs));
+                    /*ko.utils.arrayForEach(data, function (dv) 
+                    {
+                        $.ajax({ url: "/index.php/switches/" + dv.id + "/switch"}
+                        ).done(function (ssdata) 
+                        {
+                            dv.switch = ssdata;
+                            self.dvs.push(dv);
+                        });
+                    });*/
+                }
+            }).fail(function (xhr) 
+            {
+
+            });
+        };
+    };
+    var ctvm = new centervm();
+    setTimeout('ctvm.loaddata()', 500);
+   // setInterval('ctvm.loaddata()', 5000);
+    ko.applyBindings(ctvm, document.getElementById("centerModel"));
+</script>
