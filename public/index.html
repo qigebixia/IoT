@@ -10,6 +10,7 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="Cache-Control" content="no-siteapp" />
     <link rel="icon" type="image/png" href="assets/i/favicon.png">
+    <link rel="apple-touch-icon-precomposed" href="assets/i/app-icon72x72@2x.png">
     <link rel="stylesheet" href="assets/css/amazeui.min.css">
     <link rel="stylesheet" href="assets/css/app.css">
     <link href="assets/js/footable/css/footable.core.min.css" rel="stylesheet" />
@@ -49,8 +50,14 @@
         <div id="menu1" class="am-offcanvas">
             <div class="am-offcanvas-bar am-offcanvas-bar-flip">
                 <ul class="am-menu-nav am-avg-sm-1">
+                    <li class="">
+                        <a href="##"></a>
+                    </li>
+                    <li class="">
+                        <a data-bind="click: link_user_center" href="##">设备主页</a>
+                    </li>
                     <li data-bind="visible: showuser" class="am-parent">
-                        <a href="##">用户</a>
+                        <a href="##">我的用户</a>
                         <ul class="am-menu-sub am-collapse  am-avg-sm-2 ">
                             <li class="">
                                 <a href="##" data-bind="click:link_acaddus">添加用户</a>
@@ -59,18 +66,12 @@
                                 <a href="##" data-bind="click:link_acuss">管理用户</a>
                             </li>
                         </ul>
-                    </li>
-                    <li class="">
-                        <a data-bind="click: link_nav" href="##">快速指南</a>
-                    </li>
-                    <li class="">
-                        <a data-bind="click: link_user_center" href="##">我的设备</a>
-                    </li>
+                    </li> 
                     <li class="am-parent">
-                        <a href="##">账户</a>
+                        <a href="##">我的账户</a>
                         <ul class="am-menu-sub am-collapse  am-avg-sm-2 ">
                             <li class="">
-                                <a data-bind="click: link_account" href="##">我的账号设置</a>
+                                <a data-bind="click: link_account" href="##">账号设置</a>
                             </li>
                             <li class="">
                                 <a data-bind="click: link_accountEditPwd" href="##">修改密码</a>

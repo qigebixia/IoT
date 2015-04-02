@@ -109,8 +109,6 @@
                     localStorage.clear();
                   self.uid("");
                   self.pwd("");
-                  $("#msg").html("账号已清除！");
-                  $('#my-prompt').modal('open');
               }
           } else {
               $("#msg").html("你的浏览器不支持此功能！");
@@ -118,9 +116,6 @@
           }
       });
         
-        self.link_nav = function (){
-            go("web/nav_page.html");
-        }
       self.link_acuss = function () {
           go("web/ac_uss_page.html");
       };
