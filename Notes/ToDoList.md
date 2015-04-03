@@ -4,10 +4,12 @@
     3. 遥控器 逻辑。
     4. 二级界面。switch stepdevices
     5. 用户权限管理
+    6. wiki
+    7. 门禁
     
 
 
-###Hign Priority:
+###High Priority:
     1. 首页item可排序。
     2. 可添加删除设备。
     3. 权限安全升级。

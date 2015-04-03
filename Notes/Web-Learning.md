@@ -30,3 +30,11 @@ http://knockoutjs.com/documentation/observables.html
 http://www.w3school.com.cn/jquery/jquery_ajax_get_post.asp
 
 http://www.w3school.com.cn/jquery/ajax_ajax.asp
+
+
+###openwrt 编译
+
+http://demon.tw/hardware/hg255d-compile-openwrt-barrier-breaker.html
+
+ git clone git://git.openwrt.org/12.09/openwrt.git
+
