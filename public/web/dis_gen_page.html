@@ -33,17 +33,14 @@
 
         self.loaddata = function () {
             $.ajax({
-                url: "/v1.0/device/" + $.AMUI.utils.cookie.get('dvid') + "/sensor/" + $.AMUI.utils.cookie.get('ssid') + "/json?page=1",
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader("U-ApiKey", $.AMUI.utils.cookie.get('ukey'));
-                }
+                url: "/v1.0/device/" + $.AMUI.utils.cookie.get('dvid') + "/sensor/" + $.AMUI.utils.cookie.get('ssid') + "/json?page=1"
             }).done(function (data) {
                 self.dps(data);
             });
         };
     };
     var ctvm = new centervm();
-    //这里要等系统web.config中的系统设备传感器操作最快可重复访问间隔时间值，单位（秒）系统默认0.1秒
+    
     setTimeout('ctvm.loaddata()', 100);
     ko.applyBindings(ctvm, document.getElementById("gensModel"));
 

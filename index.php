@@ -36,6 +36,112 @@ $app->get( '/', function () use ($app)
     
 	# $app->render('phpinfo.php',array('title'=>'PHP'));
 });
+/***************             Devices                 **********************/
+// GET /switches?page=1&rows=10
+$app->get('/devices', function () use ($app) 
+{ 
+    $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+    $rows = isset($_GET['rows']) ? intval($_GET['rows']) : 10;
+    $offset = ($page-1)*$rows;
+    $result = array();
+
+    include 'conn.php';
+
+    $rs = mysql_query("select count(*) from devices");
+    $row = mysql_fetch_row($rs); 
+    $result["total"] = $row[0];
+
+    $sql = "select * from devices ";
+    $rs = mysql_query($sql);
+    $items = array();
+
+    while($row = mysql_fetch_object($rs))
+	{
+      array_push($items, $row);
+    }
+    $result["rows"] = $items;
+
+    $app->response()->header('Content-Type', 'application/json');
+    echo json_encode($items, JSON_NUMERIC_CHECK);
+});
+
+// GET /switches/:id 
+$app->get('/devices/:id', function ($id) use ($app) 
+{ 
+    include 'conn.php';
+    $sql = "select * from devices where id = '$id' limit 1";
+    $rs = mysql_query($sql);
+    
+    if($row = mysql_fetch_object($rs))
+	{
+        $app->response()->header('Content-Type', 'application/json');
+
+        echo json_encode( $row, JSON_NUMERIC_CHECK);
+    } 
+	else 
+	{
+        $app->response()->status(404);
+    }
+});
+
+// GET /switches/:id/switch 
+$app->get('/devices/:id/value', function ($id) use ($app) 
+{ 
+  include 'conn.php';
+  //$sql = 'select * from switches where id =' . $id;
+  $sql = "select value from devices where id = '$id' limit 1";
+  $rs = mysql_query($sql);
+  $row = mysql_fetch_object($rs);
+
+  if(null != $row)
+	{
+		$app->response()->header('Content-Type', 'application/json');
+		$device_value = $row->value;
+
+		echo $device_value;//json_encode( $device_value, JSON_NUMERIC_CHECK);
+    } 
+	else 
+	{
+    	$app->response()->status(404);
+    }
+});
+
+$app->post('/devices/:id', function ($id) use ($app) 
+{   
+	// the arduino post a string ,then encode it to a json.
+	$request = $app->request();
+	$body = $request->getBody();
+	$input = json_decode($body);   
+
+
+	include 'conn.php';
+	// classify three types from the json code items.	
+	$type = (string)$input->type;
+	
+	if("switch" == $type)
+	{
+		$value = $input->value;
+	}
+	else if ("step" == $type) 
+	{
+		$switch = (string)$input->switch;
+		$controller = (string)$input->controller;
+		$value = '{"switch":'.$switch.',"controller":'.$controller.'}';		
+	}
+
+	$sql = "update devices set value='$value' where id='$id'";
+
+	$result = @mysql_query($sql);
+	if ($result)
+	{
+		echo (string)$value;
+		echo json_encode(array('success'=>true));
+	} 
+	else 
+	{
+		echo json_encode(array('success'=>false));
+	}
+});
 
 /***************             Switches                 **********************/
 // GET /switches?page=1&rows=10
@@ -144,6 +250,37 @@ $app->post('/user', function ()
 	{
 
 		echo json_encode(array('username'=>$username)); 
+
+	   /* if(!isset($_SESSION))
+		{
+	    	session_start();
+		}   
+	    $_SESSION['username'] = $result['username'];  
+		$_SESSION['password'] = $result['password']; */
+	} 
+	else 
+	{
+		//header('Location:/public/index.html'); 
+	}
+});
+$app->put('/user', function () 
+{   
+	$request = $app->request();
+	$body = $request->getBody();
+	$input = json_decode($body);   
+	$username = (string)$input->username;
+	$oldpwd = (string)$input->oldpwd;
+	$newpwd = (string)$input->newpwd;
+    	  
+
+	include 'conn.php';
+
+	$check_query = mysql_query("update userlists set password='$newpwd' where username='$username' limit 1"); 
+
+	if ($result = mysql_fetch_array($check_query))
+	{
+
+		echo json_encode(array('password'=>$password)); 
 
 	   /* if(!isset($_SESSION))
 		{

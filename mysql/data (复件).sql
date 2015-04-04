@@ -1,19 +1,29 @@
-create table  if not exists `devices` (
+create table  if not exists `switches` (
 		`id` int(11) NOT NULL AUTO_INCREMENT primary key,
-		`type` tinytext not null,
-		`name` tinytext not null,
-		`value` tinytext not null
+		`name` text not null,
+		`switch` int not null
 );
 
-insert into `devices` (`id`, `type`, `name`, `value`) values
-(1, 'switch', 'led1', '0'),
-(2, 'switch', 'curtain', '0'),
-(3, 'switch', 'screen', '0'),
-(4, 'switch', 'tap_water', '0'),
-(5, 'switch', 'projector', '0'),
-(6, 'switch', 'camara', '0'),
-(7, 'step', 'led2', '{"switch":0,"controller":"0"}');
+insert into `switches` (`id`, `name`, `switch`) values
+(1, 'led1', 0),
+(2, 'curtain', 0),
+(3, 'screen', 0),
+(4, 'tap_water', 0),
+(5, 'projector', 0),
+(6, 'camara', 0);
 
+create table  if not exists stepdevices
+	(
+		`id` int unsigned not null auto_increment primary key,
+		`name` text not null,
+		`switch` int not null,
+		controller text not null
+	);
+
+insert into `stepdevices` (`id`, `name`, `switch`, `controller`) values
+(1, 'led2', 0, 0 ),
+(2, 'led3', 0, 0 ),
+(3, 'sound', 0, 0 );
 
 /* 
 create table  if not exists genericdevices

@@ -81,6 +81,27 @@
   function appvm() 
   {
       var self = this;
+
+
+      self.link_acuss = function () {
+          go("web/ac_uss_page.html");
+      };
+      self.link_acaddus = function () {
+          go("web/ac_addus_page.html");
+      };
+      self.link_account = function () {
+          go("web/ac_page.html");
+      };
+      self.link_user_center = function () {
+          go("web/center_page.html");
+      };
+      self.link_alldvs = function () {
+          go("web/dvs_page.html");
+      };
+      self.link_adddv = function () {
+          go("web/dvadd_page.html");
+      };
+
       self.showuser = ko.observable(false);
       self.shownav = ko.observable(false);
       self.showuinfo = ko.observable(false);
@@ -115,28 +136,11 @@
               $('#my-prompt').modal('open');
           }
       });
-        
-      self.link_acuss = function () {
-          go("web/ac_uss_page.html");
-      };
-      self.link_acaddus = function () {
-          go("web/ac_addus_page.html");
-      };
-      self.link_account = function () {
-          go("web/ac_page.html");
-      };
-      self.link_user_center = function () {
-          go("web/center_page.html");
-      };
-      self.link_alldvs = function () {
-          go("web/dvs_page.html");
-      };
+      
       self.link_accountEditPwd = function () {
           go("web/acpwd_page.html");
       };
-      self.link_adddv = function () {
-          go("web/dvadd_page.html");
-      };
+      
     self.link_user = function () 
     {
         if ($.AMUI.utils.cookie.get('uid') !== null) 

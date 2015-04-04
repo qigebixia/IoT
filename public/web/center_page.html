@@ -1,17 +1,28 @@
 ﻿<div id="centerModel" >
     <div data-am-widget="list_news" class="am-list-news am-list-news-default">
         <div class="am-list-news-bd">
-            <ul data-bind="foreach: { data: dvs, as: 'dv' }" class="am-list am-list-static am-list-border">
+            <ul data-bind="foreach: { data: switchDevices, as: 'dv' }" class="am-list am-list-static am-list-border">
                 <li class="am-g am-list-item-desced">
+                    <!-- <a href="###" data-bind="click: $root.disSwitch"> -->
                     <span class="am-icon-power-off"></span>
                     <span data-bind="text:dv.name + 'Title'"></span>
                     <div class="switch am-fr">
-                        <input class="cmn-toggle cmn-toggle-round" type="checkbox"
-                               data-bind="attr: {id: 'cb' + '-' + dv.id, value : dv.switch }, checked : dv.switch,
+                        <input class="cmn-toggle cmn-toggle-round" type="checkbox" 
+                               data-bind="attr: {id: 'cb' + '-' + dv.id, value : dv.value }, checked : dv.value,
                                  event:{ change: $root.switchChanged}">
                         <label data-bind="attr: { 'for': 'cb' + '-' + dv.id }"></label>
                     </div>
                     <div class="am-list-item-text" data-bind="text:dv.name+'text'"></div>
+
+                </li>
+            </ul>
+            <ul data-bind="foreach: { data: stepDevices, as: 'dv2' }" class="am-list am-list-static am-list-border">
+                <li class="am-g am-list-item-desced">
+                    <!-- <a href="###" data-bind="click: $root.disSwitch"> -->
+                    <span class="am-icon-power-off"></span>
+                    <span data-bind="text:dv2.name + 'StepTitle'"></span>
+                    <label data-bind="attr: { 'for': 'cb2' + '-' + dv2.id }"></label>
+                    </div>
                 </li>
             </ul>
         </div>
@@ -27,48 +38,39 @@
             $("#render").load("web/dis_val_page.html");
         };
 
-        self.displayval2 = function (ss) {
-            $.AMUI.utils.cookie.set('dvid', ss.dvid);
-            $.AMUI.utils.cookie.set('ssid', ss.id);
-            $("#render").load("web/dis_val_list_page.html");
-        };
-
-        self.disdvs = function(ss){
-            $("#render").load("web/dvs_page.html");
+        self.disSwitch = function(ss){
+            $("#render").load("web/dis_val_page.html");
         }
 
-        self.checkFeedBack = function()
-        {
-           
-        }
+
         self.switchChanged = function (item) 
         {
-            var data = "{\"switch\":" + Number(item.switch()) + "}";
+            var switchData = "{\"type\":\"switch\",\"value\":" + Number(item.value()) + "}";
             $.ajax(
             {
-                type: "PUT",
-                url: "/index.php/switches/"  + item.id + "/switch",
-                data: data,
+                type: "POST",
+                url: "/index.php/devices/"  + item.id,
+                data: switchData,
                 success: function (data) 
                 {
                    $.post("/index.php/feedback/"+item.name,
                         "{\"code\":1}",
-                        function(data)
+                        function(d)
                         {
                             console.log("seed 1 OK");
                         });
                    setTimeout(function()
                     {
                         $.get("/index.php/feedback/"+item.name,
-                            function(data)
+                            function(fdbData)
                             {
-                                if(1 == data)
+                                if(1 == fdbData)
                                 {
-                                    console.log("didn't get !!");
-                                }else if (2 == data) 
+                                    console.log("didn't linked !!");
+                                }else if (2 == fdbData) 
                                 {
                                     console.log("something wrong with the server !!");
-                                }else if (0 == data) 
+                                }else if (0 == fdbData) 
                                 {
                                     console.log("Well done!");
                                 };
@@ -82,7 +84,7 @@
                         "{'code':2}",
                         function()
                         {
-                            console.log("seed 1 OK");
+                            console.log("seed 2 OK");
                         });
                     $("#msg").html(xhr.responseText);
                     $('#my-prompt').modal('open');
@@ -90,11 +92,13 @@
             });
         };
 
-        self.dvs = ko.observableArray();
+        self.switchDevices = ko.observableArray();
+        self.stepDevices = ko.observableArray();
+
         self.loaddata = function () 
         {
             $.ajax({
-                url: "/index.php/switches"
+                url: "/index.php/devices"
             }).done(function (data) 
             {
                 if (data.length === 0) 
@@ -103,19 +107,27 @@
                 } 
                 else 
                 {
-                    if(0 == self.dvs().length)
+                    if(0 == self.switchDevices().length)
                     {
                        for (var i = 0; i < data.length; i++) 
                         {
-                            data[i].switch = ko.observable( Boolean(data[i].switch) );
-                            self.dvs.push(data[i]);
+                            if("switch" == data[i].type)
+                            {
+                                data[i].value = ko.observable( Boolean(data[i].value) );
+                                self.switchDevices.push(data[i]);
+                            }else if ("step" == data[i].type) 
+                            {
+                               // data[i].value = ko.observable( Boolean(data[i].value) );
+                                self.stepDevices.push(data[i]);
+                            };
+                            
                         };
                     }
                     else
                     {
                         for (var i = 0; i < data.length; i++) 
                         {
-                            self.dvs()[i].switch( Boolean(data[i].switch) );
+                            self.switchDevices()[i].switch( Boolean(data[i].value) );
                         };
                     }
                 

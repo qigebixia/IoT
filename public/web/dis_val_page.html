@@ -44,27 +44,7 @@
         self.start = ko.observable();
         self.end = ko.observable();
         self.itv = ko.observable();
-        self.one1hour = function () {
-            self.start(new Date());
-            self.start().setHours(self.start().getHours() - 1);
-            self.end(new Date());
-            self.itv(10);
-            self.loaddata();
-        };
-        self.one3hour = function () {
-            self.start(new Date());
-            self.start().setHours(self.start().getHours() - 3);
-            self.end(new Date());
-            self.itv(30);
-            self.loaddata();
-        };
-        self.one12hour = function () {
-            self.start(new Date());
-            self.start().setHours(self.start().getHours() - 12);
-            self.end(new Date());
-            self.itv(60);
-            self.loaddata();
-        };
+      
         self.oneday = function () {
             self.start(new Date());
             self.start().setDate(self.start().getDate() - 1);
@@ -72,27 +52,7 @@
             self.itv(300);
             self.loaddata();
         };
-        self.treeday = function () {
-            self.start(new Date());
-            self.start().setDate(self.start().getDate() - 3);
-            self.end(new Date());
-            self.itv(3600);
-            self.loaddata();
-        };
-        self.oneweek = function () {
-            self.start(new Date());
-            self.start().setDate(self.start().getDate() - 7);
-            self.end(new Date());
-            self.itv(21600);
-            self.loaddata();
-        };
-        self.onemonth = function () {
-            self.start(new Date());
-            self.start().setMonth(self.start().getMonth() - 1);
-            self.end(new Date());
-            self.itv(86400);
-            self.loaddata();
-        };
+        
         //#endregion
 
         self.loaddata = function () {
@@ -102,10 +62,7 @@
             $.ajax({
                 url: "/v1.0/device/" + $.AMUI.utils.cookie.get('dvid') + "/sensor/" + $.AMUI.utils.cookie.get('ssid')
                 + "/json?start=" + self.start().pattern("yyyy-MM-ddTHH:mm:ss")
-                + "&end=" + self.end().pattern("yyyy-MM-ddTHH:mm:ss") + "&interval=" + self.itv() + "&page=1",
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader("U-ApiKey", $.AMUI.utils.cookie.get('ukey'));
-                }
+                + "&end=" + self.end().pattern("yyyy-MM-ddTHH:mm:ss") + "&interval=" + self.itv() + "&page=1"
             }).done(function (data) {
                 //var last = data[data.length - 1];
                 ko.utils.arrayForEach(data, function (val) {

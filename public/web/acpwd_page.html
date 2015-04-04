@@ -42,7 +42,7 @@
             if (self.isValid()) {
                 var dv = new Object();
                 dv.userId = $.AMUI.utils.cookie.get('uid');
-                dv.pwd = self.newpwd();
+                dv.newpwd = self.newpwd();
                 return JSON.stringify(dv);
             } else {
                 $("#msg").html("数据验证失败！");
@@ -52,7 +52,7 @@
 
         self.acpwdSave = function () {
             if (self.isValid()) {
-                var uri = "/v1.0/user?username=" + $.AMUI.utils.cookie.get('uid') + "&pass=" + self.oldpwd();
+                var uri = "/index.php/user?username=" + $.AMUI.utils.cookie.get('uid') + "&pwd=" + self.oldpwd();
                 $.ajax({
                     type: "PUT",
                     url: uri,
