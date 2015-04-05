@@ -87,19 +87,27 @@ $app->get('/devices/:id', function ($id) use ($app)
 // GET /switches/:id/switch 
 $app->get('/devices/:id/value', function ($id) use ($app) 
 { 
-  include 'conn.php';
-  //$sql = 'select * from switches where id =' . $id;
-  $sql = "select value from devices where id = '$id' limit 1";
-  $rs = mysql_query($sql);
-  $row = mysql_fetch_object($rs);
+	include 'conn.php';
+	//$sql = 'select * from switches where id =' . $id;
+	$sql = "select * from devices where id = '$id' limit 1";
+	$rs = mysql_query($sql);
+	$row = mysql_fetch_object($rs);
 
-  if(null != $row)
+	if(null != $row)
 	{
+		
+		if ("switch" == $row->type) 
+		{
+			$device_value = "{\"switch\":".(string)$row->value."}";
+		}
+		elseif ("step" == $row->type) 
+		{
+			$device_value = (string)$row->value;
+		}
+		
 		$app->response()->header('Content-Type', 'application/json');
-		$device_value = $row->value;
-
-		echo $device_value;//json_encode( $device_value, JSON_NUMERIC_CHECK);
-    } 
+		echo  json_encode( json_decode($device_value,true), JSON_NUMERIC_CHECK);
+	} 
 	else 
 	{
     	$app->response()->status(404);
@@ -112,18 +120,23 @@ $app->post('/devices/:id', function ($id) use ($app)
 	$request = $app->request();
 	$body = $request->getBody();
 	$input = json_decode($body);   
-
+	$type = (string)$input->type;
+	// $type = $_POST["type"];  
+     
 
 	include 'conn.php';
 	// classify three types from the json code items.	
-	$type = (string)$input->type;
+	
 	
 	if("switch" == $type)
 	{
+		// $value = $_POST['value'];
 		$value = $input->value;
 	}
-	else if ("step" == $type) 
+	elseif ("step" == $type) 
 	{
+		// $switch = $_POST['switch'];
+		// $controller = $_POST['controller'];
 		$switch = (string)$input->switch;
 		$controller = (string)$input->controller;
 		$value = '{"switch":'.$switch.',"controller":'.$controller.'}';		
@@ -134,7 +147,7 @@ $app->post('/devices/:id', function ($id) use ($app)
 	$result = @mysql_query($sql);
 	if ($result)
 	{
-		echo (string)$value;
+		//echo (string)$body;
 		echo json_encode(array('success'=>true));
 	} 
 	else 
@@ -314,7 +327,6 @@ $app->post('/feedback/:name', function ($name) use ($app)
 	} 
 	else 
 	{
-		echo $feedback;
 		echo json_encode(array('updatefeedBack'=>false));
 	}
     

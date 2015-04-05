@@ -1,8 +1,8 @@
 create table  if not exists `devices` (
-		`id` int(11) NOT NULL AUTO_INCREMENT primary key,
-		`type` tinytext not null,
-		`name` tinytext not null,
-		`value` tinytext not null
+        `id` int(11) NOT NULL AUTO_INCREMENT primary key,
+        `type` tinytext not null,
+        `name` tinytext not null,
+        `value` tinytext not null
 );
 
 insert into `devices` (`id`, `type`, `name`, `value`) values
@@ -18,11 +18,11 @@ insert into `devices` (`id`, `type`, `name`, `value`) values
 /* 
 create table  if not exists genericdevices
 	(
-		`id` int unsigned not null auto_increment primary key,
-		timestamp   not null,
-		`switch` int not null,
-		sound_value not null,
-		channel_value 
+        `id` int unsigned not null auto_increment primary key,
+        timestamp   not null,
+        `switch` int not null,
+        sound_value not null,
+        channel_value 
 
 	);
 
@@ -30,9 +30,9 @@ insert into `genericdevices` (`id`, `name`, ``switch``, `controller`) values
 */
 create table  if not exists userlists
 	(
-		`userid` int(255) not null  auto_increment primary key,
-		`username` char(255) not null,
-		`password` char(255) not null
+        `userid` int(255) not null  auto_increment primary key,
+        `username` char(255) not null,
+        `password` char(255) not null
 	);
 insert into `userlists` (`userid`, `username`, `password`) values
 (1, 'admin', 'admin');

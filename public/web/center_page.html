@@ -21,7 +21,6 @@
                     <!-- <a href="###" data-bind="click: $root.disSwitch"> -->
                     <span class="am-icon-power-off"></span>
                     <span data-bind="text:dv2.name + 'StepTitle'"></span>
-                    <label data-bind="attr: { 'for': 'cb2' + '-' + dv2.id }"></label>
                     </div>
                 </li>
             </ul>
@@ -38,24 +37,29 @@
             $("#render").load("web/dis_val_page.html");
         };
 
-        self.disSwitch = function(ss){
+        self.disSwitch = function(ss)
+        {
             $("#render").load("web/dis_val_page.html");
         }
 
+        self.disStep = function(ss)
+        {
+            $("#render").load("web/dis_val_page.html");
+        }
 
         self.switchChanged = function (item) 
         {
-            var switchData = "{\"type\":\"switch\",\"value\":" + Number(item.value()) + "}";
+            var switchData = '{"type":"switch","value":'+ Number(item.value()) +'}';
             $.ajax(
             {
                 type: "POST",
                 url: "/index.php/devices/"  + item.id,
                 data: switchData,
-                success: function (data) 
+                success: function (subdata) 
                 {
                    $.post("/index.php/feedback/"+item.name,
                         "{\"code\":1}",
-                        function(d)
+                        function (d)
                         {
                             console.log("seed 1 OK");
                         });
@@ -66,13 +70,13 @@
                             {
                                 if(1 == fdbData)
                                 {
-                                    console.log("didn't linked !!");
+                                    console.log("Not accessable !!");
                                 }else if (2 == fdbData) 
                                 {
-                                    console.log("something wrong with the server !!");
+                                    console.log("Something wrong with the server !!");
                                 }else if (0 == fdbData) 
                                 {
-                                    console.log("Well done!");
+                                    console.log("Success Changed !");
                                 };
                             });
                     }, 4000);
