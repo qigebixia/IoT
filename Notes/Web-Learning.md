@@ -38,3 +38,14 @@ http://demon.tw/hardware/hg255d-compile-openwrt-barrier-breaker.html
 
  git clone git://git.openwrt.org/12.09/openwrt.git
 
+###前端slide
+
+http://kenwheeler.github.io/slick/
+
+###MQTT协议
+
+http://download.csdn.net/detail/wuzehai02/4735078
+
+http://www.cnblogs.com/caca/p/mqtt.html
+
+
