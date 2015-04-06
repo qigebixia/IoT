@@ -1,0 +1,178 @@
+﻿
+<div id="led2Model" >
+<div class="am-btn-group doc-js-btn-1" data-am-button>
+  <label class="am-btn am-btn-primary">
+    <input type="radio" name="options" value="left" id="option1"><i class="am-icon-chevron-left"></i>
+  </label>
+  <label class="am-btn am-btn-primary">
+    <input type="radio" name="options" value="hold" id="option2"><i class="am-icon-stop"></i>
+  </label>
+  <label class="am-btn am-btn-primary">
+    <input type="radio" name="options" value="right" id="option3"><i class="am-icon-chevron-right"></i>
+  </label>
+</div>
+<div class="switch am-fr">
+    <input class="cmn-toggle cmn-toggle-round" type="checkbox" data-bind="attr: {id: 'cb-' + $root.id, value : $root.switch }, checked : $root.switch, event:{ change: $root.led2Changed}" >
+    <label data-bind="attr: { 'for': 'cb-' + $root.id }"></label>
+ </div>
+</div>
+<script type="text/javascript">
+var led2Value;var togswitch;var led2data; var controller;
+function centervm() 
+{
+    var self = this;
+
+    // make the variables observable 
+    self.switch = ko.observable(new Boolean() );
+    self.led2Value = ko.observable({});
+    self.led2data = ko.observable({});
+    self.controller = ko.observable(0);
+
+    self.loaddata = function () 
+    {
+        $.ajax({
+            url: "/index.php/devices/7"
+        }).done(function (data) 
+        {
+            self.led2data = data;
+            
+            self.led2Value($.parseJSON(data.value));// = ko.observable();
+            
+            self.switch(Boolean( self.led2Value().switch ));
+            self.controller(Number( self.led2Value().controller ));
+
+            led2Value = self.led2Value;
+            togswitch = self.switch;
+            led2data  = self.led2data; 
+            controller = self.controller;
+
+            console.log("self.led2data",led2data);
+           // for (var i = 0; i < data.length; i++) 
+           //  {
+           //      if("switch" == data[i].type)
+           //      {
+           //          data[i].value = ko.observable( Boolean(data[i].value) );
+           //          self.switchDevices.push(data[i]);
+           //      }else if ("step" == data[i].type) 
+           //      {
+           //         // data[i].value = ko.observable( Boolean(data[i].value) );
+           //          self.stepDevices.push(data[i]);
+           //      };
+                
+           //  };
+            
+            
+
+        });
+    };
+    self.led2Changed = function ()
+    {
+        var switchData = '{"type":"step","switch":' + Number(self.switch()) +',"controller":'+Number(self.controller())+'}';
+        console.log("self.switch():",self.switch());
+            $.ajax(
+            {
+                type: "POST",
+                url: "/index.php/devices/7",
+                data: switchData,
+                success: function (subdata) 
+                {
+                   $.post("/index.php/feedback/led2",//+self.led2data.name,
+                        "{\"code\":1}",
+                        function (d)
+                        {
+                            console.log("seed 1 OK");
+                        });
+                   setTimeout(function()
+                    {
+                        $.get("/index.php/feedback/led2",//+self.led2data.name,
+                            function(fdbData)
+                            {
+                                if(1 == fdbData)
+                                {
+                                    console.log("Led2 switch Not accessable !!");
+                                }else if (2 == fdbData) 
+                                {
+                                    console.log("Something wrong with the server !!");
+                                }else if (0 == fdbData) 
+                                {
+                                    console.log("Led2 switch Success Changed !");
+                                };
+                            });
+                    }, 4000);
+                 //  console.log(data);
+                },
+                error: function (xhr, status, error) 
+                {
+                    $.post("/index.php/feedback/led2",//+self.led2data.name,
+                        "{'code':2}",
+                        function()
+                        {
+                            console.log("seed 2 OK");
+                        });
+                    $("#msg").html(xhr.responseText);
+                    $('#my-prompt').modal('open');
+                }
+            });
+    }
+}
+// check out which radio is selected and run the function radioChange under event:change
+$(function() 
+{
+    var $radios = $('[name="options"]');
+    $radios.on('change',function() 
+    {
+        if(togswitch())
+        {
+           if ("left" == $radios.filter(':checked').val())
+            {
+                var controllerData = '{"type":"step","switch":' + Number(togswitch()) +',"controller":1}';
+                $.ajax(
+                    {
+                        type: "POST",
+                        url: "/index.php/devices/7",
+                        data: controllerData,
+                        success : function (){console.log("post ", $radios.filter(':checked').val());}
+                    });
+            }
+            else if ("right" == $radios.filter(':checked').val()) 
+            {
+                var controllerData = '{"type":"step","switch":' + Number(togswitch()) +',"controller":2}';
+                $.ajax(
+                    {
+                        type: "POST",
+                        url: "/index.php/devices/7",
+                        data: controllerData,
+                        success : function (){console.log("post ", $radios.filter(':checked').val());}
+                    });
+            }else
+            {
+                var controllerData = '{"type":"step","switch":' + Number(togswitch()) +',"controller":0}';
+                $.ajax(
+                    {
+                        type: "POST",
+                        url: "/index.php/devices/7",
+                        data: controllerData,
+                        success : function (){console.log("post ", $radios.filter(':checked').val());}
+                    });
+            }
+        }
+      console.log('selected : ', $radios.filter(':checked').val(),"con",controller());
+    });
+});
+var ctvm2 = new centervm();
+
+setTimeout('ctvm2.loaddata()', 300);
+ko.applyBindings(ctvm2, document.getElementById("led2Model"));
+
+//go back to main page
+var mainmodel = ko.dataFor(document.getElementById("mainModel"));
+mainmodel.showback(true);
+mainmodel.showuinfo(false);
+mainmodel.gopage = function (url) 
+{
+    $("#render").load("web/center_page.html");
+    mainmodel.showback(false);
+    mainmodel.showuinfo(true);
+};
+    
+</script>

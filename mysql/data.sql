@@ -50,3 +50,4 @@ insert into `feedBackCode` (`id`, `name`, `code`) values
 (4, 'tap_water', 1),
 (5, 'projector', 1),
 (6, 'camara', 1);
+(7, 'led2', 1);

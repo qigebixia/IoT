@@ -18,7 +18,7 @@
             </ul>
             <ul data-bind="foreach: { data: stepDevices, as: 'dv2' }" class="am-list am-list-static am-list-border">
                 <li class="am-g am-list-item-desced">
-                    <!-- <a href="###" data-bind="click: $root.disSwitch"> -->
+                    <a href="###" data-bind="click: $root.disLed2">
                     <span class="am-icon-power-off"></span>
                     <span data-bind="text:dv2.name + 'StepTitle'"></span>
                     </div>
@@ -26,6 +26,7 @@
             </ul>
         </div>
     </div>
+
 </div>
 <script type="text/javascript">
     function centervm() {
@@ -42,9 +43,9 @@
             $("#render").load("web/dis_val_page.html");
         }
 
-        self.disStep = function(ss)
+        self.disLed2 = function(ss)
         {
-            $("#render").load("web/dis_val_page.html");
+            $("#render").load("web/dis_led2_page.html");
         }
 
         self.switchChanged = function (item) 
@@ -131,7 +132,7 @@
                     {
                         for (var i = 0; i < data.length; i++) 
                         {
-                            self.switchDevices()[i].switch( Boolean(data[i].value) );
+                            self.switchDevices()[i].value( Boolean(data[i].value) );
                         };
                     }
                 
