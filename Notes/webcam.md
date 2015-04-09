@@ -9,3 +9,4 @@ mjpg_streamer -i "input_uvc.so -y -f 5 -r 480*360 -q 50 -d /dev/video0" -o "outp
 
 摄像头页面。。嵌入一个iframe即可。
 <iframe xmlns="http://www.w3.org/1999/xhtml" align="middle" width="640" height="480" id="videoframe" scrolling="no" border="0" name="lantk" frameBorder="0" src="http://192.168.1.1:8081/javascript_simple.html"></iframe>
+  
