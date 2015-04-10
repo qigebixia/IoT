@@ -1,8 +1,8 @@
 ###Base Function:
-    1. 视频监控与云台。
-    2. 步进量stepDevices
+    1. 云台。* 视频监控 
+    2. *步进量stepDevices 
     3. 遥控器 逻辑。
-    4. 二级界面。switch stepdevices
+    4. *二级界面。switch stepdevices
     5. 用户权限管理
     6. wiki
     7. 门禁
