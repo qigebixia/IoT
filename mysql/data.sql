@@ -1,19 +1,18 @@
 create table  if not exists `devices` (
-    `id` int(11) NOT NULL AUTO_INCREMENT primary key,
-    `type` tinytext not null,
-    `name` tinytext not null,
-    `value` tinytext not null,
-    `description` tinytext not null
-)DEFAULT CHARSET=utf8;
+        `id` int(11) NOT NULL AUTO_INCREMENT primary key,
+        `type` tinytext not null,
+        `name` tinytext not null,
+        `value` tinytext not null
+);
 
-insert into `devices` (`id`, `type`, `name`, `value`, `description`) values
-(1, 'switch', 'led1', '0', '照明灯'),
-(2, 'switch', 'curtain', '0', '窗帘'),
-(3, 'switch', 'screen', '0', '幕布'),
-(4, 'switch', 'tap_water', '0', '自来水'),
-(5, 'switch', 'projector', '0', '投影仪'),
-(6, 'switch', 'camara', '0', '摄像机'),
-(7, 'step', 'led2', '{"switch":0,"controller":"0"}', 'LED灯带');
+insert into `devices` (`id`, `type`, `name`, `value`) values
+(1, 'switch', 'led1', '0'),
+(2, 'switch', 'curtain', '0'),
+(3, 'switch', 'screen', '0'),
+(4, 'switch', 'tap_water', '0'),
+(5, 'switch', 'projector', '0'),
+(6, 'switch', 'camara', '0'),
+(7, 'step', 'led2', '{"switch":0,"controller":"0"}');
 
 
 /* 
@@ -30,16 +29,13 @@ create table  if not exists genericdevices
 insert into `genericdevices` (`id`, `name`, ``switch``, `controller`) values
 */
 create table  if not exists userlists
-(
-    `userid` int(255) not null  auto_increment primary key,
-    `username` char(255) not null,
-    `password` char(255) not null,
-    `realname`  tinytext not null,
-    `qq` char(255) not null,
-    `email` char(255) not null
-)DEFAULT CHARSET=utf8;
-insert into `userlists` (`userid`, `username`, `password`, `realname`, `qq`, `email`) values
-(1, 'admin', 'admin', '大管理员', '10000', 'admin@admin.com');
+	(
+        `userid` int(255) not null  auto_increment primary key,
+        `username` char(255) not null,
+        `password` char(255) not null
+	);
+insert into `userlists` (`userid`, `username`, `password`) values
+(1, 'admin', 'admin');
 
 create table  if not exists feedBackCode
 (

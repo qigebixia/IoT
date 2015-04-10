@@ -4,20 +4,20 @@
         <div id="acModel" class="am-form">
             <div class="am-form-group">
                 <label>用户名:</label>
-                <input type="text" data-bind="value: userId">
-                <p class="am-alert-danger" data-bind="validationMessage: userId"></p>
+                <input type="text" data-bind="value: username">
+                <p class="am-alert-danger" data-bind="validationMessage: username"></p>
                 <p class="am-form-help">不超过30个字符</p>
             </div>
             <div class="am-form-group">
                 <label>密码:</label>
-                <input type="text" data-bind="value: pwd">
-                <p class="am-alert-danger" data-bind="validationMessage: pwd"></p>
+                <input type="text" data-bind="value: password">
+                <p class="am-alert-danger" data-bind="validationMessage: password"></p>
                 <p class="am-form-help">不超过30个字符</p>
             </div>
             <div class="am-form-group">
                 <label>用户姓名:</label>
-                <input type="text" data-bind="value: userName">
-                <p class="am-alert-danger" data-bind="validationMessage: userName"></p>
+                <input type="text" data-bind="value: realname">
+                <p class="am-alert-danger" data-bind="validationMessage: realname"></p>
                 <p class="am-form-help">不超过30个字符</p>
             </div>
             <div class="am-form-group">
@@ -47,20 +47,20 @@
     </div>
 </div>
 <script type="text/javascript">
-    var uri = "/v1.0/user?username=" + $.AMUI.utils.cookie.get('uid') + "&pass=" + $.AMUI.utils.cookie.get('pwd');
+   // var uri = "/usercreate" + $.AMUI.utils.cookie.get('uid') + "&pass=" + $.AMUI.utils.cookie.get('password');
     function acvm() {
         var self = this;
         self.username = ko.observable().extend({ required: true, minLength: 3, maxLength: 64 });
-        self.pwd = ko.observable().extend({ required: true, minLength: 3, maxLength: 64 });
-        self.realName = ko.observable().extend({ required: true, minLength: 3, maxLength: 64 });
+        self.password = ko.observable().extend({ required: true, minLength: 3, maxLength: 64 });
+        self.realname = ko.observable().extend({ required: true, minLength: 3, maxLength: 64 });
         self.email = ko.observable().extend({ required: true, minLength: 3, maxLength: 64 });
         self.qq = ko.observable().extend({ required: true, minLength: 3, maxLength: 64 });
 
         self.getjson = function () {
             var dv = new Object();
             dv.username = self.username();
-            dv.pwd = self.pwd();
-            dv.realName = self.realName();
+            dv.password = self.password();
+            dv.realname = self.realname();
             dv.email = self.email();
             dv.qq = self.qq();
             return JSON.stringify(dv);
@@ -70,7 +70,7 @@
             if (self.isValid()) {
                 $.ajax({
                     type: "POST",
-                    url: uri,
+                    url: "/index.php/usercreate",
                     data: self.getjson(),
                     beforeSend: function (xhr) {
                         xhr.setRequestHeader("Content-Type", "application/json")
@@ -95,9 +95,9 @@
         };
 
         self.cancel = function () {
-            self.userId("");
-            self.pwd("");
-            self.userName("");
+            self.username("");
+            self.password("");
+            self.realname("");
             self.email("");
             self.qq("");
         };

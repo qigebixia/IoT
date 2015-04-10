@@ -123,11 +123,8 @@ $app->post('/devices/:id', function ($id) use ($app)
 	$input = json_decode($body);   
 	$type = (string)$input->type;
 	// $type = $_POST["type"];  
-     
-
 	include 'conn.php';
 	// classify three types from the json code items.	
-	
 	
 	if("switch" == $type)
 	{
@@ -157,6 +154,28 @@ $app->post('/devices/:id', function ($id) use ($app)
 	}
 });
 /***************             User                        **********************/
+$app->get('/user', function () 
+{   
+	$username = htmlspecialchars($_GET['username']);  
+  //  $password = $_POST['pwd'];  
+
+	include 'conn.php';
+	if ("admin" === $username) 
+	{
+		$check_query = mysql_query("select * from userlists"); 
+	}
+	
+
+	if ($result = mysql_fetch_array($check_query))
+	{
+
+		echo json_encode( $result);
+	} 
+	else 
+	{
+		//header('Location:/public/index.html'); 
+	}
+});
 $app->post('/user', function () 
 {   
 	$username = htmlspecialchars($_POST['username']);  
@@ -220,23 +239,22 @@ $app->post('/usercreate', function () use ($app)
 	$body = $request->getBody();
 	$input = json_decode($body);   
 	$username = (string)$input->username;
-	$oldpwd = (string)$input->oldpwd;
-	$newpwd = (string)$input->newpwd;
+	$password = (string)$input->password;
+	$realname = (string)$input->realname;
+	$qq = (string)$input->qq;
+	$email = (string)$input->email;
    	// $username = $_POST['username'];
    	// $oldpwd = $_POST['oldpwd'];
    	// $newpwd = $_POST['newpwd'];
 
 	include 'conn.php';
-	$check_query = mysql_query("select * from userlists where username='$username' and password='$oldpwd' limit 1"); 
-
-	if ($checkresult = mysql_fetch_object($check_query)) 
-	{
-		$update_sql = "update userlists set password='$newpwd' where username='$username' limit 1";
-		$result = @mysql_query($update_sql);
-	}
+	
+	$query = "INSERT INTO userlists(username, password, realname, qq, email) VALUE('$username', '$password', '$realname','$qq', '$email')";  
+	$result = @mysql_query($query);
+	
 	if ($result)
 	{
-		echo json_encode(array('password'=>$newpwd)); 
+		echo json_encode(array('username'=>$username)); 
 	} 
 	else 
 	{
