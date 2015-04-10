@@ -50,17 +50,17 @@
     var uri = "/v1.0/user?username=" + $.AMUI.utils.cookie.get('uid') + "&pass=" + $.AMUI.utils.cookie.get('pwd');
     function acvm() {
         var self = this;
-        self.userId = ko.observable().extend({ required: true, minLength: 3, maxLength: 64 });
+        self.username = ko.observable().extend({ required: true, minLength: 3, maxLength: 64 });
         self.pwd = ko.observable().extend({ required: true, minLength: 3, maxLength: 64 });
-        self.userName = ko.observable().extend({ required: true, minLength: 3, maxLength: 64 });
+        self.realName = ko.observable().extend({ required: true, minLength: 3, maxLength: 64 });
         self.email = ko.observable().extend({ required: true, minLength: 3, maxLength: 64 });
         self.qq = ko.observable().extend({ required: true, minLength: 3, maxLength: 64 });
 
         self.getjson = function () {
             var dv = new Object();
-            dv.userId = self.userId();
+            dv.username = self.username();
             dv.pwd = self.pwd();
-            dv.userName = self.userName();
+            dv.realName = self.realName();
             dv.email = self.email();
             dv.qq = self.qq();
             return JSON.stringify(dv);

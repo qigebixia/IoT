@@ -204,23 +204,42 @@ $app->post('/useredit', function () use ($app)
 		$update_sql = "update userlists set password='$newpwd' where username='$username' limit 1";
 		$result = @mysql_query($update_sql);
 	}
-	 
-
 	if ($result)
 	{
-
 		echo json_encode(array('password'=>$newpwd)); 
-
-	   /* if(!isset($_SESSION))
-		{
-	    	session_start();
-		}   
-	    $_SESSION['username'] = $result['username'];  
-		$_SESSION['password'] = $result['password']; */
 	} 
 	else 
 	{
-		//header('Location:/public/index.html'); 
+	}
+});
+
+$app->post('/usercreate', function () use ($app) 
+{   
+	$result = false;
+	$request = $app->request();
+	$body = $request->getBody();
+	$input = json_decode($body);   
+	$username = (string)$input->username;
+	$oldpwd = (string)$input->oldpwd;
+	$newpwd = (string)$input->newpwd;
+   	// $username = $_POST['username'];
+   	// $oldpwd = $_POST['oldpwd'];
+   	// $newpwd = $_POST['newpwd'];
+
+	include 'conn.php';
+	$check_query = mysql_query("select * from userlists where username='$username' and password='$oldpwd' limit 1"); 
+
+	if ($checkresult = mysql_fetch_object($check_query)) 
+	{
+		$update_sql = "update userlists set password='$newpwd' where username='$username' limit 1";
+		$result = @mysql_query($update_sql);
+	}
+	if ($result)
+	{
+		echo json_encode(array('password'=>$newpwd)); 
+	} 
+	else 
+	{
 	}
 });
 /***************             FeedBack                 **********************/

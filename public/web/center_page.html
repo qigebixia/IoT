@@ -5,14 +5,14 @@
                 <li class="am-g am-list-item-desced">
                     <!-- <a href="###" data-bind="click: $root.disSwitch"> -->
                     <span class="am-icon-power-off"></span>
-                    <span data-bind="text:dv.name + 'Title'"></span>
+                    <span data-bind="text: dv.description"></span>
                     <div class="switch am-fr">
                         <input class="cmn-toggle cmn-toggle-round" type="checkbox" 
                                data-bind="attr: {id: 'cb' + '-' + dv.id, value : dv.value }, checked : dv.value,
                                  event:{ change: $root.switchChanged}">
                         <label data-bind="attr: { 'for': 'cb' + '-' + dv.id }"></label>
                     </div>
-                    <div class="am-list-item-text" data-bind="text:dv.name+'text'"></div>
+                    <!-- <div class="am-list-item-text" data-bind="text:dv.name+'text'"></div> -->
 
                 </li>
             </ul>
@@ -20,7 +20,7 @@
                 <li class="am-g am-list-item-desced">
                     <a href="###" data-bind="click: $root.disLed2">
                     <span class="am-icon-power-off"></span>
-                    <span data-bind="text:dv2.name + 'StepTitle'"></span>
+                    <span data-bind="text:dv.description"></span>
                     </div>
                 </li>
             </ul>
