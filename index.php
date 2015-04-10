@@ -41,7 +41,7 @@ $app->get( '/', function () use ($app)
 $app->get('/devices', function () use ($app) 
 { 
     $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
-    $rows = isset($_GET['rows']) ? intval($_GET['rows']) : 10;
+    $rows = isset($_GET['rows']) ? intval($_GET['rows']) : 14;
     $offset = ($page-1)*$rows;
     $result = array();
 
@@ -65,7 +65,7 @@ $app->get('/devices', function () use ($app)
     echo json_encode($items, JSON_NUMERIC_CHECK);
 });
 
-// GET /switches/:id 
+// GET /devices/:id 
 $app->get('/devices/:id', function ($id) use ($app) 
 { 
     include 'conn.php';
@@ -84,7 +84,7 @@ $app->get('/devices/:id', function ($id) use ($app)
     }
 });
 
-// GET /switches/:id/switch 
+// GET /devices/:id/value 
 $app->get('/devices/:id/value', function ($id) use ($app) 
 { 
 	include 'conn.php';
@@ -114,6 +114,7 @@ $app->get('/devices/:id/value', function ($id) use ($app)
     }
 });
 
+// POST value 
 $app->post('/devices/:id', function ($id) use ($app) 
 {   
 	// the arduino post a string ,then encode it to a json.
@@ -155,7 +156,116 @@ $app->post('/devices/:id', function ($id) use ($app)
 		echo json_encode(array('success'=>false));
 	}
 });
+/***************             User                        **********************/
+$app->post('/user', function () 
+{   
+	$username = htmlspecialchars($_POST['username']);  
+    $password = $_POST['pwd'];  
 
+	include 'conn.php';
+
+	$check_query = mysql_query("select * from userlists where username='$username' and password='$password' limit 1"); 
+
+	if ($result = mysql_fetch_array($check_query))
+	{
+
+		echo json_encode(array('username'=>$username)); 
+
+	   /* if(!isset($_SESSION))
+		{
+	    	session_start();
+		}   
+	    $_SESSION['username'] = $result['username'];  
+		$_SESSION['password'] = $result['password']; */
+	} 
+	else 
+	{
+		//header('Location:/public/index.html'); 
+	}
+});
+$app->post('/useredit', function () use ($app) 
+{   
+	$result = false;
+	$request = $app->request();
+	$body = $request->getBody();
+	$input = json_decode($body);   
+	$username = (string)$input->username;
+	$oldpwd = (string)$input->oldpwd;
+	$newpwd = (string)$input->newpwd;
+   	// $username = $_POST['username'];
+   	// $oldpwd = $_POST['oldpwd'];
+   	// $newpwd = $_POST['newpwd'];
+
+	include 'conn.php';
+	$check_query = mysql_query("select * from userlists where username='$username' and password='$oldpwd' limit 1"); 
+
+	if ($checkresult = mysql_fetch_object($check_query)) 
+	{
+		$update_sql = "update userlists set password='$newpwd' where username='$username' limit 1";
+		$result = @mysql_query($update_sql);
+	}
+	 
+
+	if ($result)
+	{
+
+		echo json_encode(array('password'=>$newpwd)); 
+
+	   /* if(!isset($_SESSION))
+		{
+	    	session_start();
+		}   
+	    $_SESSION['username'] = $result['username'];  
+		$_SESSION['password'] = $result['password']; */
+	} 
+	else 
+	{
+		//header('Location:/public/index.html'); 
+	}
+});
+/***************             FeedBack                 **********************/
+$app->post('/feedback/:name', function ($name) use ($app) 
+{   
+    $request = $app->request();
+	$body = $request->getBody();
+	$input = json_decode($body);  
+ 	
+    $feedback = $input->code; 
+    $name = (string)$name;
+
+    include 'conn.php';
+    // To ensure that there is $name or not
+    $sql = "update feedBackCode set code='$feedback' where name='$name'";
+	$result = @mysql_query($sql);
+	if ($result)
+	{
+		echo json_encode(array('updatefeedBack'=>true));
+	} 
+	else 
+	{
+		echo json_encode(array('updatefeedBack'=>false));
+	}
+    
+});
+
+$app->get('/feedback/:name', function ($name) use ($app) 
+{ 
+  include 'conn.php';
+  //$sql = 'select * from switches where id =' . $id;
+  $sql = "select code from feedBackCode where name='$name' limit 1";
+  $rs = mysql_query($sql);
+  
+  if($row = mysql_fetch_object($rs))
+	{
+		$app->response()->header('Content-Type', 'application/json');
+
+		echo $row->code;//json_encode( $row, JSON_NUMERIC_CHECK);
+    } 
+	else 
+	{
+    	$app->response()->status(404);
+    }
+});
 /***************             Switches                 **********************/
 // GET /switches?page=1&rows=10
 $app->get('/switches', function () use ($app) 
@@ -249,107 +359,7 @@ $app->put('/switches/:id/switch', function ($id) use ($app)
 		echo json_encode(array('success'=>false));
 	}
 });
-/***************             User                        **********************/
-$app->post('/user', function () 
-{   
-	$username = htmlspecialchars($_POST['username']);  
-    $password = $_POST['pwd'];  
 
-	include 'conn.php';
-
-	$check_query = mysql_query("select * from userlists where username='$username' and password='$password' limit 1"); 
-
-	if ($result = mysql_fetch_array($check_query))
-	{
-
-		echo json_encode(array('username'=>$username)); 
-
-	   /* if(!isset($_SESSION))
-		{
-	    	session_start();
-		}   
-	    $_SESSION['username'] = $result['username'];  
-		$_SESSION['password'] = $result['password']; */
-	} 
-	else 
-	{
-		//header('Location:/public/index.html'); 
-	}
-});
-$app->put('/user', function () 
-{   
-	$request = $app->request();
-	$body = $request->getBody();
-	$input = json_decode($body);   
-	$username = (string)$input->username;
-	$oldpwd = (string)$input->oldpwd;
-	$newpwd = (string)$input->newpwd;
-    	  
-
-	include 'conn.php';
-
-	$check_query = mysql_query("update userlists set password='$newpwd' where username='$username' limit 1"); 
-
-	if ($result = mysql_fetch_array($check_query))
-	{
-
-		echo json_encode(array('password'=>$password)); 
-
-	   /* if(!isset($_SESSION))
-		{
-	    	session_start();
-		}   
-	    $_SESSION['username'] = $result['username'];  
-		$_SESSION['password'] = $result['password']; */
-	} 
-	else 
-	{
-		//header('Location:/public/index.html'); 
-	}
-});
-/***************             FeedBack                 **********************/
-$app->post('/feedback/:name', function ($name) use ($app) 
-{   
-    $request = $app->request();
-	$body = $request->getBody();
-	$input = json_decode($body);  
- 	
-    $feedback = $input->code; 
-    $name = (string)$name;
-
-    include 'conn.php';
-    // To ensure that there is $name or not
-    $sql = "update feedBackCode set code='$feedback' where name='$name'";
-	$result = @mysql_query($sql);
-	if ($result)
-	{
-		echo json_encode(array('updatefeedBack'=>true));
-	} 
-	else 
-	{
-		echo json_encode(array('updatefeedBack'=>false));
-	}
-    
-});
-
-$app->get('/feedback/:name', function ($name) use ($app) 
-{ 
-  include 'conn.php';
-  //$sql = 'select * from switches where id =' . $id;
-  $sql = "select code from feedBackCode where name='$name' limit 1";
-  $rs = mysql_query($sql);
-  
-  if($row = mysql_fetch_object($rs))
-	{
-		$app->response()->header('Content-Type', 'application/json');
-
-		echo $row->code;//json_encode( $row, JSON_NUMERIC_CHECK);
-    } 
-	else 
-	{
-    	$app->response()->status(404);
-    }
-});
 /***************             StepDevices                 **********************/
 $app->get('/stepdevices', function () use ($app) 
 { 
