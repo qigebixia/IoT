@@ -24,6 +24,13 @@
                     </div>
                 </li>
             </ul>
+            <ul class="am-list am-list-static am-list-border">
+                <li class="am-g am-list-item-desced">
+                    <a href="###" data-bind="click: $root.disCam">
+                    <span data-bind="text:'Camamra' + 'StepTitle'"></span>
+                    </div>
+                </li>
+            </ul>
         </div>
     </div>
 
@@ -46,6 +53,13 @@
         self.disLed2 = function(ss)
         {
             $("#render").load("web/dis_led2_page.html");
+        }
+
+        self.disCam = function(ss)
+        {
+            $("#render").load("web/dis_cam_page.html");
+            // $("#render").load("http://192.168.1.1:8081/javascript_simple.html");
+            // document.location = "http://192.168.1.1:8081/javascript_simple.html";
         }
 
         self.switchChanged = function (item) 
