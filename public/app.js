@@ -174,7 +174,7 @@
               $.AMUI.progress.start();
               $.ajax({
                   type:"POST",
-                  url: "/index.php/user",
+                  url: "/index.php/userlogin",
                   data:{'username' : self.uid(), 'pwd': self.pwd()}
               }).done(function (data) {
                 console.log(data);

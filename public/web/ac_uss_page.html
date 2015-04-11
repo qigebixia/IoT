@@ -39,7 +39,7 @@
         self.uss = ko.observable();
         self.loaddata = function () {
             $.ajax({
-                url: "/index.php/user?username=" + $.AMUI.utils.cookie.get('uid') 
+                url: "/index.php/userall?username=" + $.AMUI.utils.cookie.get('uid') 
             }).done(function (data) {
                 console.log("UserData:",data);
                 self.uss(data);
