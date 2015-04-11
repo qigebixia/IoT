@@ -154,7 +154,7 @@ $app->post('/devices/:id', function ($id) use ($app)
 	}
 });
 /***************             User                        **********************/
-$app->get('/user', function () use ($app)
+$app->get('/userall', function () use ($app)
 {   
 	$username = htmlspecialchars($_GET['username']);  
   //  $password = $_POST['pwd'];  
@@ -176,11 +176,54 @@ $app->get('/user', function () use ($app)
 	    }
 	}
 	
-		$app->response()->header('Content-Type', 'application/json');
-   		echo json_encode($items);
+	$app->response()->header('Content-Type', 'application/json');
+	echo json_encode($items);
 });
 
-$app->post('/user', function () 
+$app->get('/user', function () use ($app)
+{   
+	$username = htmlspecialchars($_GET['username']);  
+  //  $password = $_POST['pwd'];  
+
+	include 'conn.php';
+	if ("admin" === $username ) 
+	{
+		$sql = "select * from userlists where username='$username' limit 1";
+	    $rs = mysql_query($sql);
+
+	    if($result = mysql_fetch_object($rs))
+		{
+			$app->response()->header('Content-Type', 'application/json');
+			echo json_encode($result); 
+	    }
+	}
+
+});
+
+$app->post('/user', function () use ($app)
+{   
+	$result = false;
+	$request = $app->request();
+	$body = $request->getBody();
+	$input = json_decode($body);   
+	$username = (string)$input->username;
+	$realname = (string)$input->realname;
+	$email = (string)$input->email;  
+	$qq = (string)$input->qq;  
+  //  $password = $_POST['pwd'];  
+
+	include 'conn.php';
+	
+	$sql = "update userlists set realname='$realname', email='$email', qq='$qq' where username='$username' limit 1";
+    $rs = @mysql_query($sql);
+
+    if($rs)
+	{
+    }
+	
+});
+
+$app->post('/userlogin', function () 
 {   
 	$username = htmlspecialchars($_POST['username']);  
     $password = $_POST['pwd'];  
