@@ -41,6 +41,7 @@
             $.ajax({
                 url: "/index.php/user?username=" + $.AMUI.utils.cookie.get('uid') 
             }).done(function (data) {
+                console.log("UserData:",data);
                 self.uss(data);
                 $('.footable').footable().trigger('footable_initialize');
             });
@@ -51,19 +52,20 @@
             $("#dialog-confirm").dialog({
                 resizable: false,
                 modal: true,
-                title: "酷痞物联",
+                title: "物联",
                 height: 250,
                 width: 250,
                 buttons: {
                     "确定": function () {
                         $(this).dialog('close');
                         $.ajax({
-                            url: "/v1.0/user?username=" + $.AMUI.utils.cookie.get('uid')
-                                + "&pass=" + $.AMUI.utils.cookie.get('pwd') + "&duid=" + escape(ss.userId),
-                            type: "DELETE"
+                            url: "/index.php/userdelete",
+                            type: "POST",
+                            data: {"username" : $.AMUI.utils.cookie.get('uid'), "delname" : escape(ss.username)}
                         }).done(function (data) {
                             if (data === "") {
                                 self.loaddata();
+                                console.log("Delete sucessful!");
                             } else {
                                 $("#msg").html(data.Error);
                                 $('#my-prompt').modal('open');
