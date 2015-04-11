@@ -154,7 +154,7 @@ $app->post('/devices/:id', function ($id) use ($app)
 	}
 });
 /***************             User                        **********************/
-$app->get('/user', function () 
+$app->get('/user', function () use ($app)
 {   
 	$username = htmlspecialchars($_GET['username']);  
   //  $password = $_POST['pwd'];  
@@ -162,20 +162,24 @@ $app->get('/user', function ()
 	include 'conn.php';
 	if ("admin" === $username) 
 	{
-		$check_query = mysql_query("select * from userlists"); 
+		$sql = "select * from userlists ";
+	    $rs = mysql_query($sql);
+	    $items = array();
+
+	    while($row = mysql_fetch_object($rs))
+		{
+			if ($row->username !== "admin") 
+			{
+				array_push($items, $row);
+			}
+	    	
+	    }
 	}
 	
-
-	if ($result = mysql_fetch_array($check_query))
-	{
-
-		echo json_encode( $result);
-	} 
-	else 
-	{
-		//header('Location:/public/index.html'); 
-	}
+		$app->response()->header('Content-Type', 'application/json');
+   		echo json_encode($items);
 });
+
 $app->post('/user', function () 
 {   
 	$username = htmlspecialchars($_POST['username']);  
@@ -202,6 +206,21 @@ $app->post('/user', function ()
 		//header('Location:/public/index.html'); 
 	}
 });
+
+$app->post('/userdelete', function () 
+{   
+	$username = htmlspecialchars($_POST['username']);  
+   // 	$password = $_POST['pwd'];  
+	$deleteName = $_POST['delname'];  
+	include 'conn.php';
+
+	if ("admin" === $username) 
+	{
+		$sql = "delete from userlists where username='$deleteName' limit 1"; 
+		$result = @mysql_query($sql);
+	}
+});
+
 $app->post('/useredit', function () use ($app) 
 {   
 	$result = false;
