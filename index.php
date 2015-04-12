@@ -48,7 +48,8 @@ $app->get('/devices', function () use ($app)
 
     while($row = mysql_fetch_object($rs))
     {
-      array_push($items, $row);
+        $row->description = urlencode($row->description );
+        array_push($items, $row);
     }
 
     $app->response()->header('Content-Type', 'application/json');
