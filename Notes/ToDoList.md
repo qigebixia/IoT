@@ -19,5 +19,5 @@
 ###Low Priority:
     1. MVC重构
     2. nodejs
-    3. 添加MQTT协议
+    3. *添加MQTT协议
     4. HTML5 首页可视化交互。
