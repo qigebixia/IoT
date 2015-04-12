@@ -16,3 +16,6 @@
 [MQTT学习笔记——Yeelink MQTT服务 使用mqtt.js和paho-mqtt ](http://blog.csdn.net/xukai871105/article/details/39346461)
 
 
+####3. 物联网下MQTT
+
+[MQTT物联网协议相关开发库](http://www.open-open.com/lib/view/open1421134493953.html)
