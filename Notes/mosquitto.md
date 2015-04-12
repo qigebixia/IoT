@@ -9,3 +9,10 @@
 - 【MQTT协议消息】——MQTT中的消息可理解为发布者和订阅者交换的内容（负载），这些消息包含具体的内容，可以被订阅者使用。
 - 【MQTT协议主题】——MQTT中的主题可理解为相同类型或相似类型的消息集合。
 
+####2. linux下使用MQTT
+
+[Mosquitto简要教程（安装/使用/测试）](http://blog.csdn.net/shagoo/article/details/7910598)
+
+[MQTT学习笔记——Yeelink MQTT服务 使用mqtt.js和paho-mqtt ](http://blog.csdn.net/xukai871105/article/details/39346461)
+
+
