@@ -130,6 +130,7 @@
                     {
                        for (var i = 0; i < data.length; i++) 
                         {
+                            data[i].description = decodeURI(data[i].description);
                             if("switch" == data[i].type)
                             {
                                 data[i].value = ko.observable( Boolean(data[i].value) );

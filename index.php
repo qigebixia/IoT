@@ -191,7 +191,6 @@ $app->get('/userall', function () use ($app)
 {   
     $username = htmlspecialchars($_GET['username']);  
   //  $password = $_POST['pwd'];  
-
     include 'conn.php';
     if ("admin" === $username) 
     {
@@ -205,7 +204,6 @@ $app->get('/userall', function () use ($app)
             {
                 array_push($items, $row);
             }
-            
         }
     }
     

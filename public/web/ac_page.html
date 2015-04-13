@@ -27,7 +27,8 @@
 </div>
 <script type="text/javascript">
     $.ajax({
-        url: "/index.php/user?username=" + $.AMUI.utils.cookie.get('uid')
+        url: "/index.php/user",
+        data : {"username" : $.AMUI.utils.cookie.get('uid')}
     }).done(function (data) {
         function acvm() {
             var self = this;
