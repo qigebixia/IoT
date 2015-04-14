@@ -19,3 +19,21 @@
         /etc/nginx/nginx.conf
         /etc/nginx/vhost.conf
         /etc/my.cnf
+   
+   overlay : 528931a4-f19e-4de9-8c6d-40d0951e8c2f 
+   
+   /mnt/sda3 : a91d90d0-54f1-4378-b5df-91ce9b9f2ca9 
+   
+   swap : b1dafc32-4d49-48c2-848e-928c65066e7e 
+----   
+   swap : be9eed84-87f6-4ad0-98de-da633e16b97f
+   
+src/gz chaos_calmer_base http://downloads.openwrt.org/snapshots/trunk/ramips/generic/packages/base
+src/gz chaos_calmer_extra http://downloads.openwrt.org/snapshots/trunk/ramips/generic/packages/extra
+src/gz chaos_calmer_luci http://downloads.openwrt.org/snapshots/trunk/ramips/generic/packages/luci
+src/gz chaos_calmer_management http://downloads.openwrt.org/snapshots/trunk/ramips/generic/packages/management
+src/gz chaos_calmer_oldpackages http://downloads.openwrt.org/snapshots/trunk/ramips/generic/packages/oldpackages
+src/gz chaos_calmer_packages http://downloads.openwrt.org/snapshots/trunk/ramips/generic/packages/packages
+src/gz chaos_calmer_routing http://downloads.openwrt.org/snapshots/trunk/ramips/generic/packages/routing
+src/gz chaos_calmer_telephony http://downloads.openwrt.org/snapshots/trunk/ramips/generic/packages/telephony
+
