@@ -11,7 +11,7 @@
 
 >[openwrt挂载u盘，并将系统转移到u盘中 ](http://blog.csdn.net/wonengxing/article/details/24270071)
 
-需要注意的是：此固件基于[barrier_breaker/14.07/ramips/rt305x/](http://downloads.openwrt.org/barrier_breaker/14.07/ramips/rt305x/)
+需要注意的是：此固件基于[barrier_breaker/14.07/ramips/rt305x/](http://downloads.openwrt.org/barrier_breaker/14.07/ramips/rt305x/) *or snapshots/trunk/ramips/rt305x/*
 
 自带的block-mount已经集成了block-extroot。在相关的luci界面下【系统->挂载点】即可设置相关的挂载，无需手动修改/etc/config/fstab文件。
 
@@ -61,6 +61,7 @@
 尝试添加`option target '/overlay'`
     
 - ②开机启动：
+
         root@OpenWrt:/# /etc/init.d/fstab enable 
         root@OpenWrt:/# /etc/init.d/fstab start 
         this file has been obseleted. please call "/sbin/block mount" directly 
