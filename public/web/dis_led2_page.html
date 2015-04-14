@@ -1,20 +1,11 @@
-﻿
-<div id="led2Model" >
-<div class="am-btn-group doc-js-btn-1" data-am-button>
-  <label class="am-btn am-btn-primary">
-    <input type="radio" name="options" value="left" id="option1"><i class="am-icon-chevron-left"></i>
-  </label>
-  <label class="am-btn am-btn-primary">
-    <input type="radio" name="options" value="hold" id="option2"><i class="am-icon-stop"></i>
-  </label>
-  <label class="am-btn am-btn-primary">
-    <input type="radio" name="options" value="right" id="option3"><i class="am-icon-chevron-right"></i>
-  </label>
-</div>
-<div class="switch am-fr">
-    <input class="cmn-toggle cmn-toggle-round" type="checkbox" data-bind="attr: {id: 'cb-' + $root.id, value : $root.switch }, checked : $root.switch, event:{ change: $root.led2Changed}" >
-    <label data-bind="attr: { 'for': 'cb-' + $root.id }"></label>
- </div>
+﻿<div id="led2Model" >
+    <div id="container">
+      <div id="topLoader">      
+    </div>
+    <div class="switch am-fr">
+        <input class="cmn-toggle cmn-toggle-round" type="checkbox" data-bind="attr: {id: 'cb-' + $root.id, value : $root.switch }, checked : $root.switch, event:{ change: $root.led2Changed}" >
+        <label data-bind="attr: { 'for': 'cb-' + $root.id }"></label>
+     </div>
 </div>
 <script type="text/javascript">
 var led2Value;var togswitch;var led2data; var controller;
@@ -118,45 +109,27 @@ function centervm()
 // check out which radio is selected and run the function radioChange under event:change
 $(function() 
 {
-    var $radios = $('[name="options"]');
-    $radios.on('change',function() 
-    {
-        if(togswitch())
+    var $topLoader = $("#topLoader").percentageLoader({
+        width: 256, height: 256, controllable: true, progress: 0.5, 
+        onProgressUpdate: function (val) 
         {
-           if ("left" == $radios.filter(':checked').val())
+            this.setValue( controller() + 'kj');
+        },
+        onProgressComplete: function (val) 
+        {
+            controller(Math.round(val * 100.0));
+            if(togswitch())
             {
-                var controllerData = '{"type":"step","switch":' + Number(togswitch()) +',"controller":1}';
+                var controllerData = '{"type":"step","switch":' + Number(togswitch()) +',"controller":'+ controller()+'}';
                 $.ajax(
-                    {
-                        type: "POST",
-                        url: "/index.php/devices/7",
-                        data: controllerData,
-                        success : function (){console.log("post ", $radios.filter(':checked').val());}
-                    });
-            }
-            else if ("right" == $radios.filter(':checked').val()) 
-            {
-                var controllerData = '{"type":"step","switch":' + Number(togswitch()) +',"controller":2}';
-                $.ajax(
-                    {
-                        type: "POST",
-                        url: "/index.php/devices/7",
-                        data: controllerData,
-                        success : function (){console.log("post ", $radios.filter(':checked').val());}
-                    });
-            }else
-            {
-                var controllerData = '{"type":"step","switch":' + Number(togswitch()) +',"controller":0}';
-                $.ajax(
-                    {
-                        type: "POST",
-                        url: "/index.php/devices/7",
-                        data: controllerData,
-                        success : function (){console.log("post ", $radios.filter(':checked').val());}
-                    });
+                {
+                    type: "POST",
+                    url: "/index.php/devices/7",
+                    data: controllerData,
+                    success : function (){console.log("post controller", controller() );}
+                });
             }
         }
-      console.log('selected : ', $radios.filter(':checked').val(),"con",controller());
     });
 });
 var ctvm2 = new centervm();

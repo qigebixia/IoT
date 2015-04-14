@@ -194,7 +194,7 @@ $app->get('/userall', function () use ($app)
     include 'conn.php';
     if ("admin" === $username) 
     {
-        $sql = "select * from userlists ";
+        $sql = "select * from userlists";
         $rs = mysql_query($sql);
         $items = array();
 
