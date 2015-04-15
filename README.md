@@ -15,6 +15,12 @@ Only server's code is updated, arduino's code is on the way(based on WIFI shield
 
 - Not finished, maybe usque ad this August.
 
+####HARDWARE ITEMS CONTAINS:
+
+220V light, Curtain, Screen, Tap water, Projector, Camara, Changable led(luminance and color)
+
+Sound, Access Control, Gas, TV, Air Conditioner.
+
 ####//TODOLIST
  
 1. Chinese wiki branch and doc
