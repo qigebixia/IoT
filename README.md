@@ -1,11 +1,11 @@
 # IoT
-the Internet of Things. Based on OpenWRT, Arduino.
+the Internet of Things, Smart home, Home automation. Based on OpenWRT, Arduino.
 
 Only server's code is updated, arduino's code is on the way(based on WIFI shield)
 
 ####This is:
 
-- Just is a specific requirement from a first party, not a pervasive templete for anybody, api is on the way.
+- Just is a specific requirement from a first party, not a pervasive templete for anybody. I'll try my best to make it reusable. So, api is on the way.
 
 - Git is just a storage, so far.
 
