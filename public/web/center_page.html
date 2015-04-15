@@ -8,7 +8,7 @@
                     <span data-bind="text: dv.description"></span>
                     <div class="switch am-fr">
                         <input class="cmn-toggle cmn-toggle-round" type="checkbox" 
-                               data-bind="attr: {id: 'cb' + '-' + dv.id, value : dv.value }, checked : dv.value,
+                               data-bind="attr: {id: 'cb' + '-' + dv.id, value : dv.value }, checked :dv.value,
                                  event:{ change: $root.switchChanged}">
                         <label data-bind="attr: { 'for': 'cb' + '-' + dv.id }"></label>
                     </div>
@@ -173,7 +173,7 @@
         };
     };
     var ctvm = new centervm();
-    setTimeout('ctvm.loaddata()', 500);
+    setTimeout('ctvm.loaddata()', 200);
    // setInterval('ctvm.loaddata()', 5000);
     ko.applyBindings(ctvm, document.getElementById("centerModel"));
 </script>

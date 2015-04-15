@@ -15,7 +15,7 @@
     <input class="cmn-toggle cmn-toggle-round" type="checkbox" data-bind="attr: {id: 'cb-' + $root.id, value : $root.switch }, checked : $root.switch, event:{ change: $root.led2Changed}" >
     <label data-bind="attr: { 'for': 'cb-' + $root.id }"></label>
  </div>
-<iframe xmlns="http://www.w3.org/1999/xhtml" align="middle" width="640" height="480" id="videoframe" scrolling="no" border="0" name="lantk" frameBorder="0" src="http://192.168.1.1:8081/javascript_simple.html"></iframe>
+<iframe align="middle" width="640" height="480" id="videoframe" scrolling="no" border="0" name="lantk" frameBorder="0" allowfullscreen mozallowfullscreen webkitallowfullscreen src="widget.html"></iframe>
 </div>
 <script type="text/javascript">
 var led2Value;var togswitch;var led2data; var controller;
@@ -160,6 +160,19 @@ $(function()
         }
       console.log('selected : ', $radios.filter(':checked').val(),"con",controller());
     });
+
+    var fullscreen = $.AMUI.fullscreen;
+    $('[name="lantk"]').on('click', function () 
+    {
+        if (fullscreen.enabled) 
+        {
+            fullscreen.toggle(this);
+            
+        }
+        console.log("fullscreen:", fullscreen.enabled);
+    });
+
+
 });
 var ctvm2 = new centervm();
 

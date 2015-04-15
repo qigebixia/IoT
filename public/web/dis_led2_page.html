@@ -8,12 +8,11 @@
      </div>
 </div>
 <script type="text/javascript">
-var led2Value;var togswitch;var led2data; var controller;
+var led2Value;var togswitch; var controller; var $topLoader;
 function centervm() 
 {
     var self = this;
-
-    // make the variables observable 
+    // make the variables observable    
     self.switch = ko.observable(new Boolean() );
     self.led2Value = ko.observable({});
     self.led2data = ko.observable({});
@@ -25,19 +24,15 @@ function centervm()
             url: "/index.php/devices/7"
         }).done(function (data) 
         {
-            self.led2data = data;
-            
             self.led2Value($.parseJSON(data.value));// = ko.observable();
-            
             self.switch(Boolean( self.led2Value().switch ));
             self.controller(Number( self.led2Value().controller ));
 
             led2Value = self.led2Value;
             togswitch = self.switch;
-            led2data  = self.led2data; 
             controller = self.controller;
 
-            console.log("self.led2data",led2data);
+            console.log("self.led2data", data);
            // for (var i = 0; i < data.length; i++) 
            //  {
            //      if("switch" == data[i].type)
@@ -60,77 +55,112 @@ function centervm()
     {
         var switchData = '{"type":"step","switch":' + Number(self.switch()) +',"controller":'+Number(self.controller())+'}';
         console.log("self.switch():",self.switch());
-            $.ajax(
+        $.ajax(
+        {
+            type: "POST",
+            url: "/index.php/devices/7",
+            data: switchData,
+            success: function (subdata) 
             {
-                type: "POST",
-                url: "/index.php/devices/7",
-                data: switchData,
-                success: function (subdata) 
-                {
-                   $.post("/index.php/feedback/led2",//+self.led2data.name,
-                        "{\"code\":1}",
-                        function (d)
-                        {
-                            console.log("seed 1 OK");
-                        });
-                   setTimeout(function()
+               $.post("/index.php/feedback/led2",//+self.led2data.name,
+                    "{\"code\":1}",
+                    function (d)
                     {
-                        $.get("/index.php/feedback/led2",//+self.led2data.name,
-                            function(fdbData)
-                            {
-                                if(1 == fdbData)
-                                {
-                                    console.log("Led2 switch Not accessable !!");
-                                }else if (2 == fdbData) 
-                                {
-                                    console.log("Something wrong with the server !!");
-                                }else if (0 == fdbData) 
-                                {
-                                    console.log("Led2 switch Success Changed !");
-                                };
-                            });
-                    }, 4000);
-                 //  console.log(data);
-                },
-                error: function (xhr, status, error) 
+                        console.log("seed 1 OK");
+                    });
+               setTimeout(function()
                 {
-                    $.post("/index.php/feedback/led2",//+self.led2data.name,
-                        "{'code':2}",
-                        function()
+                    $.get("/index.php/feedback/led2",//+self.led2data.name,
+                        function(fdbData)
                         {
-                            console.log("seed 2 OK");
+                            if(1 == fdbData)
+                            {
+                                console.log("Led2 switch Not accessable !!");
+                            }else if (2 == fdbData) 
+                            {
+                                console.log("Something wrong with the server !!");
+                            }else if (0 == fdbData) 
+                            {
+                                console.log("Led2 switch Success Changed !");
+                            };
                         });
-                    $("#msg").html(xhr.responseText);
-                    $('#my-prompt').modal('open');
+                }, 4000);
+
+               if(self.switch())
+                {
+                    $topLoader.percentageLoader({progress: Number(self.controller())/100 });
                 }
-            });
+            },
+            error: function (xhr, status, error) 
+            {
+                $.post("/index.php/feedback/led2",//+self.led2data.name,
+                    "{'code':2}",
+                    function()
+                    {
+                        console.log("seed 2 OK");
+                    });
+                $("#msg").html(xhr.responseText);
+                $('#my-prompt').modal('open');
+            }
+        });
     }
 }
 // check out which radio is selected and run the function radioChange under event:change
 $(function() 
 {
-    var $topLoader = $("#topLoader").percentageLoader({
-        width: 256, height: 256, controllable: true, progress: 0.5, 
-        onProgressUpdate: function (val) 
-        {
-            this.setValue( controller() + 'kj');
-        },
+    $topLoader = $("#topLoader").percentageLoader({
+        width: 256, height: 256, controllable: true, progress: 0, 
         onProgressComplete: function (val) 
         {
-            controller(Math.round(val * 100.0));
             if(togswitch())
             {
-                var controllerData = '{"type":"step","switch":' + Number(togswitch()) +',"controller":'+ controller()+'}';
+                controller(Math.round(val * 100.0));
+
+                var controllerNumber = controller();
+                var controllerData = '{"type":"step","switch":' + Number(togswitch()) +',"controller":'+controllerNumber +'}';
                 $.ajax(
                 {
                     type: "POST",
                     url: "/index.php/devices/7",
                     data: controllerData,
-                    success : function (){console.log("post controller", controller() );}
+                    success : function (){console.log("post controller", controllerNumber );}
                 });
             }
         }
     });
+
+    // add animation to the percentageLoader initial.
+    var topLoaderRunning = false;
+    $topLoader.percentageLoader({
+        onready: function ()
+        {
+            if (topLoaderRunning) {
+                return;
+              }
+              topLoaderRunning = true;
+              var kb = 0;
+              // var totalKb = ;
+            var animateFunc = function () 
+            {
+                var totalKb = controller()/100;
+                kb += 0.02;
+                if(kb >= totalKb)
+                {
+                    kb = totalKb;
+                }
+                $topLoader.percentageLoader({progress: kb });
+
+                if (kb < totalKb) {
+                  setTimeout(animateFunc, 25);
+                } else {
+                  topLoaderRunning = false;
+                }
+            };
+
+            setTimeout(animateFunc, 250);
+        } 
+    });
+    
 });
 var ctvm2 = new centervm();
 

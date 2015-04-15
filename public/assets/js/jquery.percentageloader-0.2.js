@@ -36,8 +36,8 @@ see the file license.txt that was included with the plugin bundle.
         settings = {
             width: 256,
             height: 256,
-            progress: 0,
-            value: '0kb',
+            progress: params['progress'],
+            value: '',
             controllable: false
         };
 
